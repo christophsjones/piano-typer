@@ -13,11 +13,9 @@ import flixel.util.FlxSave;
 
 var TITLE = 'Options';
 var HELPER_TEXT = 'Practice Options';
-var HELPER_TEXT_2 = '(no rewards if any are checked)';
 var PRACTICE_MODE_TEXT = 'No-fail mode';
 var SLOW_MODE_TEXT = 'Slow mode';
 var LAYOUT_TEXT = 'Keyboard Layout';
-var LAYOUT_TEXT_2 = '(not a puzzle, just for accessibility)';
 
 var LAYOUTS = [
 	"QWERTY",
@@ -32,9 +30,8 @@ class OptionsMenuState extends FlxState
 {
 	var layoutButtons:Map<String, FlxUICheckBox> = [];
     var leftColumnLeft = 100;
-    var leftColumnTop = 180;
+    var columnTop = 180;
     var rightColumnLeft = 400;
-    var rightColumnTop = 250;
 
     var optionsTextSize = 16;
     var optionsMarginVertical = 10;
@@ -56,16 +53,10 @@ class OptionsMenuState extends FlxState
 		var layoutText = new FlxText(0, 0, 0, LAYOUT_TEXT, 24);
 		layoutText.color = FlxColor.fromString("#111111");
 		layoutText.x = leftColumnLeft;
-		layoutText.y = leftColumnTop;
+		layoutText.y = columnTop;
 		add(layoutText);
 
-		var layoutText2 = new FlxText(0, 0, 0, LAYOUT_TEXT_2, 18);
-		layoutText2.color = FlxColor.fromString("#333333");
-		layoutText2.x = leftColumnLeft;
-		layoutText2.y = layoutText.y + layoutText.height + 2;
-		add(layoutText2);
-
-		var lcby = layoutText2.y + layoutText2.height + optionsMarginVertical;
+		var lcby = layoutText.y + layoutText.height + optionsMarginVertical;
 		var lcbi = 0;
 		for (l in LAYOUTS)
 		{
@@ -83,19 +74,13 @@ class OptionsMenuState extends FlxState
 			lcbi++;
 		}
 
-		var helperText = new FlxText(0, 0, 0, HELPER_TEXT, 24);
+		var helperText:FlxText = new FlxText(0, 0, 0, HELPER_TEXT, 24);
 		helperText.color = FlxColor.fromString("#333333");
 		helperText.x = rightColumnLeft;
-		helperText.y = rightColumnTop - 70;
+		helperText.y = columnTop;
 		add(helperText);
 
-		var helperText2 = new FlxText(0, 0, 0, HELPER_TEXT_2, 18);
-		helperText2.color = FlxColor.fromString("#333333");
-		helperText2.x = rightColumnLeft;
-		helperText2.y = rightColumnTop - 40;
-		add(helperText2);
-
-		var practiceCheckBox = new FlxUICheckBox(rightColumnLeft, rightColumnTop, FlxUIAssets.IMG_CHECK_BOX, FlxUIAssets.IMG_CHECK_MARK, PRACTICE_MODE_TEXT);
+		var practiceCheckBox = new FlxUICheckBox(rightColumnLeft, helperText.y + helperText.height + optionsMarginVertical, FlxUIAssets.IMG_CHECK_BOX, FlxUIAssets.IMG_CHECK_MARK, PRACTICE_MODE_TEXT);
 		practiceCheckBox.checked = PlayState.isPractice;
 		practiceCheckBox.getLabel().setFormat(AssetPaths.Boogaloo_Regular__ttf, optionsTextSize, FlxColor.fromString("#111111"));
         setLabelButtonColors(practiceCheckBox.button);
@@ -103,7 +88,7 @@ class OptionsMenuState extends FlxState
 		practiceCheckBox.callback = () -> togglePracticeMode();
 		add(practiceCheckBox);
 
-		var slowModeCheckBox = new FlxUICheckBox(rightColumnLeft, rightColumnTop + optionsTextSize + optionsMarginVertical, FlxUIAssets.IMG_CHECK_BOX, FlxUIAssets.IMG_CHECK_MARK, SLOW_MODE_TEXT);
+		var slowModeCheckBox = new FlxUICheckBox(rightColumnLeft, practiceCheckBox.y + 20, FlxUIAssets.IMG_CHECK_BOX, FlxUIAssets.IMG_CHECK_MARK, SLOW_MODE_TEXT);
 		slowModeCheckBox.checked = PlayState.isSlowMode;
 		slowModeCheckBox.getLabel().setFormat(AssetPaths.Boogaloo_Regular__ttf, optionsTextSize, FlxColor.fromString("#111111"));
         setLabelButtonColors(slowModeCheckBox.button);
@@ -111,7 +96,7 @@ class OptionsMenuState extends FlxState
 		slowModeCheckBox.callback = () -> toggleSlowMode();
 		add(slowModeCheckBox);
 
-		var calibrate = new FlxUIButton(rightColumnLeft, rightColumnTop - 130, "Calibrate", () -> FlxG.switchState(new CalibrationState()));
+		var calibrate = new FlxUIButton(rightColumnLeft, columnTop - 60, "Calibrate", () -> FlxG.switchState(new CalibrationState()));
 		calibrate.loadGraphic(AssetPaths.menuButton__png, true, 333, 102);
 		calibrate.scale.set(0.35, 0.5);
 		calibrate.updateHitbox();
