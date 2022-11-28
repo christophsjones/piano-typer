@@ -88,7 +88,7 @@ class OptionsMenuState extends FlxState
 		practiceCheckBox.callback = () -> togglePracticeMode();
 		add(practiceCheckBox);
 
-		var slowModeCheckBox = new FlxUICheckBox(rightColumnLeft, practiceCheckBox.y + 20, FlxUIAssets.IMG_CHECK_BOX, FlxUIAssets.IMG_CHECK_MARK, SLOW_MODE_TEXT);
+		var slowModeCheckBox = new FlxUICheckBox(rightColumnLeft, practiceCheckBox.y + 30, FlxUIAssets.IMG_CHECK_BOX, FlxUIAssets.IMG_CHECK_MARK, SLOW_MODE_TEXT);
 		slowModeCheckBox.checked = PlayState.isSlowMode;
 		slowModeCheckBox.getLabel().setFormat(AssetPaths.Boogaloo_Regular__ttf, optionsTextSize, FlxColor.fromString("#111111"));
         setLabelButtonColors(slowModeCheckBox.button);
