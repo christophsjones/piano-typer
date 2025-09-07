@@ -14,7 +14,7 @@ The "export" directory contains everything needed to host the game on a server.
 
 ## Comments
 
-To make or edit a song, check out the song format in SongData.hx. This is the only file that needs to be modified. (Note that the existing main menu UI has space for a fifth song but not a sixth.)
+To make or edit a song, check out the song format in SongData.hx. This is the only file that needs to be modified. The beatmap-convert.py script can also be used to write songs in a simpler format. (Note that the existing main menu UI has space for a fifth song but not a sixth.)
 
 Every song needs a slowed-down version of the audio for Practice Mode, with length 1.25 times the original length. [Audacity](https://www.audacityteam.org/) can be used to create a high-quality slowed down audio file. In my version of Audacity, it's under "Effect > Change Tempo..." and set "Percent Change" to "-20.00".
 
