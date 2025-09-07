@@ -127,6 +127,7 @@ class PlayState extends FlxState
 			// compute number of sixteenth notes in line
 			// using a hack for the measurelength
 			var lineLength = 0;
+			var measureLengths:Array<Int> = [];
 			for (measure in line)
 			{
 				var measLen = 16;
@@ -135,11 +136,13 @@ class PlayState extends FlxState
 					if (n.measureLength != null)
 						measLen = n.measureLength;
 				}
+				measureLengths.push(measLen);
 				lineLength += measLen;
 			}
 			lineLengths.push(conductor.beatLen * lineLength / 4);
 
 			var measCt = 0;
+			var cumulativePosition = 0;
 			for (measure in line)
 			{
 				var prevPos = null;
@@ -156,8 +159,7 @@ class PlayState extends FlxState
 					}
 					posCount++;
 
-					// this breaks if one of the non-final measures has length != 16
-					var linePosition = 16 * measCt + n.position;
+					var linePosition = cumulativePosition + n.position;
 					var noteX = SCOREX + LEFTMARGIN + PLAYABLEWIDTH * linePosition / lineLength;
 					var whichSpace = switch (posCount)
 					{
@@ -185,6 +187,7 @@ class PlayState extends FlxState
 						allScrolling.add(ts);
 					}
 				}
+				cumulativePosition += measureLengths[measCt];
 				measCt++;
 			}
 			t += conductor.beatLen * lineLength / 4;
